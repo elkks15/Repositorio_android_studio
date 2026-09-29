@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "VidaDeBalam",
+    "slug": "VidaDeBalam",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/balam-logo.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/balam-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f0f1a"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/balam-logo.png",
+        "backgroundColor": "#0f0f1a"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.ellkks14.VidaDeBalam"
+    },
+    "web": {
+      "favicon": "./assets/balam-logo.png"
+    },
+    "plugins": [
+      "expo-asset",
+      [
+        "expo-audio",
+        {
+          "enableBackgroundPlayback": false,
+          "enableBackgroundRecording": false
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0a94db69-5ff5-4d66-99fe-3cedabe70121"
+      }
+    }
+  }
+}
