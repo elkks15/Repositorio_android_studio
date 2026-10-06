@@ -1,27 +1,29 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import Ventana from '../components/Ventana';
-import { useNotas } from '../context/AppContext';
+import { useMandado } from '../context/AppContext';
 import { colors } from '../theme';
 
 export default function PerfilScreen() {
-  const { nombre, setNombre } = useNotas();
+  const { nombre, setNombre } = useMandado();
   const [borrador, setBorrador] = useState(nombre);
   const [visible, setVisible] = useState(false);
 
   const guardar = () => {
-    if (!borrador.trim()) return;
-    setNombre(borrador.trim());
+    const limpio = borrador.trim();
+    if (!limpio) return;
+    setNombre(limpio);
     setVisible(true);
   };
 
   return (
     <View style={styles.fondo}>
-      <Text style={styles.titulo}>Perfil</Text>
-      <Text style={styles.ayuda}>El nombre aparece en el inicio.</Text>
+      <Text style={styles.titulo}>¿De quién es el mandado?</Text>
+      <Text style={styles.ayuda}>El nombre sale arriba de la lista, por si van varios.</Text>
       <TextInput
         style={styles.input}
         placeholder="Tu nombre"
+        placeholderTextColor={colors.muted}
         value={borrador}
         onChangeText={setBorrador}
       />
@@ -29,29 +31,16 @@ export default function PerfilScreen() {
         <Text style={styles.botonTexto}>Usar este nombre</Text>
       </Pressable>
       <Ventana visible={visible} onClose={() => setVisible(false)} titulo="Listo">
-        <Text style={styles.ayuda}>El inicio ya saluda a {nombre}.</Text>
+        <Text style={styles.ayuda}>La lista ya dice que es el mandado de {nombre}.</Text>
       </Ventana>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  fondo: {
-    flex: 1,
-    backgroundColor: colors.bg,
-    padding: 22,
-  },
-  titulo: {
-    color: colors.ink,
-    fontSize: 30,
-    fontWeight: '800',
-  },
-  ayuda: {
-    marginTop: 8,
-    color: colors.muted,
-    lineHeight: 21,
-    fontSize: 16,
-  },
+  fondo: { flex: 1, backgroundColor: colors.bg, padding: 22 },
+  titulo: { color: colors.ink, fontSize: 30, fontWeight: '800' },
+  ayuda: { marginTop: 8, color: colors.muted, fontSize: 16, lineHeight: 22 },
   input: {
     marginTop: 18,
     borderWidth: 1,
@@ -68,8 +57,5 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
   },
-  botonTexto: {
-    color: '#fff',
-    fontWeight: '800',
-  },
+  botonTexto: { color: '#fff', fontWeight: '800' },
 });

@@ -2,67 +2,110 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 
 const AppContext = createContext(null);
 
-const NOTAS_INICIALES = [
-  {
-    id: 'super',
-    titulo: 'Súper',
-    cuerpo: 'Leche, pan y fruta.',
-    cuando: 'Hoy',
-  },
-  {
-    id: 'idea',
-    titulo: 'Idea',
-    cuerpo: 'Salir a caminar el sábado por la mañana.',
-    cuando: 'Ayer',
-  },
-];
-
-const TAREAS_INICIALES = [
-  { id: 'estudiar', titulo: 'Estudiar', detalle: 'Repasar los apuntes de hoy.' },
-  { id: 'llamar', titulo: 'Llamar a casa', detalle: 'Preguntar a qué hora es la cena.' },
-  { id: 'agua', titulo: 'Comprar agua', detalle: 'Pasar por la tienda de la esquina.' },
+const INICIALES = [
+  { id: 'leche', nombre: 'Leche', cantidad: 1, nota: 'La de caja' },
+  { id: 'pan', nombre: 'Pan', cantidad: 1, nota: '' },
+  { id: 'huevos', nombre: 'Huevos', cantidad: 12, nota: 'Una docena' },
+  { id: 'fruta', nombre: 'Fruta', cantidad: 1, nota: '' },
+  { id: 'agua', nombre: 'Agua', cantidad: 2, nota: 'Garrafones' },
+  { id: 'jabon', nombre: 'Jabón', cantidad: 1, nota: '' },
 ];
 
 export function AppProvider({ children }) {
   const [nombre, setNombre] = useState('');
-  const [notas, setNotas] = useState(NOTAS_INICIALES);
-  const [tareas] = useState(TAREAS_INICIALES);
-  const [hechas, setHechas] = useState({});
-  const [mostrarGrados, setMostrarGrados] = useState(true);
-  const [avisoNivel, setAvisoNivel] = useState(true);
+  const [productos, setProductos] = useState(INICIALES);
+  const [enCarrito, setEnCarrito] = useState({});
+  const [coche, setCoche] = useState(null);
+  const [bloquearBocaAbajo, setBloquearBocaAbajo] = useState(true);
+  const [agitarMarca, setAgitarMarca] = useState(true);
 
-  const agregarNota = useCallback((nota) => {
-    setNotas((prev) => [{ id: `${Date.now()}`, cuando: 'Ahora', ...nota }, ...prev]);
+  const agregarProducto = useCallback((nombreProducto) => {
+    const limpio = nombreProducto.trim();
+    if (!limpio) return;
+    setProductos((prev) => [
+      ...prev,
+      { id: `${Date.now()}`, nombre: limpio, cantidad: 1, nota: '' },
+    ]);
   }, []);
 
-  const marcarHecha = useCallback((id) => {
-    setHechas((prev) => ({ ...prev, [id]: true }));
+  const marcar = useCallback((id) => {
+    setEnCarrito((prev) => ({ ...prev, [id]: true }));
+  }, []);
+
+  const desmarcar = useCallback((id) => {
+    setEnCarrito((prev) => ({ ...prev, [id]: false }));
+  }, []);
+
+  const editarNota = useCallback((id, nota) => {
+    setProductos((prev) => prev.map((item) => (item.id === id ? { ...item, nota } : item)));
+  }, []);
+
+  const cambiarCantidad = useCallback((id, delta) => {
+    setProductos((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, cantidad: Math.max(1, item.cantidad + delta) } : item,
+      ),
+    );
+  }, []);
+
+  const quitar = useCallback((id) => {
+    setProductos((prev) => prev.filter((item) => item.id !== id));
+    setEnCarrito((prev) => ({ ...prev, [id]: false }));
+  }, []);
+
+  const reiniciar = useCallback(() => {
+    setEnCarrito({});
+  }, []);
+
+  const guardarCoche = useCallback((rumbo) => {
+    setCoche(rumbo);
   }, []);
 
   const value = useMemo(
     () => ({
       nombre,
       setNombre,
-      notas,
-      agregarNota,
-      tareas,
-      hechas,
-      marcarHecha,
-      mostrarGrados,
-      setMostrarGrados,
-      avisoNivel,
-      setAvisoNivel,
+      productos,
+      enCarrito,
+      agregarProducto,
+      marcar,
+      desmarcar,
+      editarNota,
+      cambiarCantidad,
+      quitar,
+      reiniciar,
+      coche,
+      guardarCoche,
+      bloquearBocaAbajo,
+      setBloquearBocaAbajo,
+      agitarMarca,
+      setAgitarMarca,
     }),
-    [nombre, notas, agregarNota, tareas, hechas, marcarHecha, mostrarGrados, avisoNivel],
+    [
+      nombre,
+      productos,
+      enCarrito,
+      agregarProducto,
+      marcar,
+      desmarcar,
+      editarNota,
+      cambiarCantidad,
+      quitar,
+      reiniciar,
+      coche,
+      guardarCoche,
+      bloquearBocaAbajo,
+      agitarMarca,
+    ],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-export function useNotas() {
+export function useMandado() {
   const ctx = useContext(AppContext);
   if (!ctx) {
-    throw new Error('useNotas debe usarse dentro de AppProvider');
+    throw new Error('useMandado debe usarse dentro de AppProvider');
   }
   return ctx;
 }

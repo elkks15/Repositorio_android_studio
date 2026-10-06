@@ -1,13 +1,19 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import NivelScreen from './NivelScreen';
-import RumboScreen from './RumboScreen';
-import QuietoScreen from './QuietoScreen';
+import ListaCompra from './ListaCompra';
 import { colors } from '../../theme';
 
 const Tab = createBottomTabNavigator();
 
-export default function InstrumentosTabs() {
+function Falta(props) {
+  return <ListaCompra {...props} modo="falta" />;
+}
+
+function Carrito(props) {
+  return <ListaCompra {...props} modo="carrito" />;
+}
+
+export default function ListaTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -21,36 +27,24 @@ export default function InstrumentosTabs() {
           paddingBottom: 8,
           paddingTop: 6,
         },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '700',
-        },
+        tabBarLabelStyle: { fontSize: 12, fontWeight: '700' },
       }}
     >
       <Tab.Screen
-        name="Nivel"
-        component={NivelScreen}
+        name="Falta"
+        component={Falta}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="ellipse-outline" size={size} color={color} />
+            <Ionicons name="list-outline" size={size} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="Rumbo"
-        component={RumboScreen}
+        name="Carrito"
+        component={Carrito}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="compass-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Giro"
-        component={QuietoScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="hand-left-outline" size={size} color={color} />
+            <Ionicons name="cart-outline" size={size} color={color} />
           ),
         }}
       />

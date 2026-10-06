@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { NativeModules, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -11,6 +12,9 @@ export default function App() {
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
+    if (__DEV__ && Platform.OS === 'ios') {
+      NativeModules.DevSettings?.setIsShakeToShowDevMenuEnabled?.(false);
+    }
     const timer = setTimeout(() => setCargando(false), 2200);
     return () => clearTimeout(timer);
   }, []);

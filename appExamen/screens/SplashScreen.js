@@ -8,7 +8,7 @@ export default function SplashScreen() {
   useEffect(() => {
     Animated.timing(opacidad, {
       toValue: 1,
-      duration: 600,
+      duration: 500,
       useNativeDriver: Platform.OS !== 'web',
     }).start();
   }, [opacidad]);
@@ -16,8 +16,8 @@ export default function SplashScreen() {
   return (
     <View style={styles.fondo}>
       <Animated.View style={{ opacity: opacidad }}>
-        <Text style={styles.nombre}>Notas</Text>
-        <Text style={styles.linea}>Tu agenda</Text>
+        <Text style={styles.nombre}>Mandado</Text>
+        <Text style={styles.linea}>Lista del súper</Text>
       </Animated.View>
     </View>
   );
@@ -32,13 +32,13 @@ const styles = StyleSheet.create({
   },
   nombre: {
     color: '#fff',
-    fontSize: 48,
+    fontSize: 46,
     fontWeight: '800',
     textAlign: 'center',
   },
   linea: {
     marginTop: 6,
-    color: '#DBEAFE',
+    color: '#DCFCE7',
     fontSize: 16,
     textAlign: 'center',
   },

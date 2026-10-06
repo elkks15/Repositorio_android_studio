@@ -2,8 +2,8 @@ import { DrawerActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import ListaTareas from './ListaTareas';
-import DetalleTarea from './DetalleTarea';
+import ListaTabs from './ListaTabs';
+import DetalleProducto from './DetalleProducto';
 import { colors } from '../../theme';
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +19,7 @@ function BotonMenu({ navigation }) {
   );
 }
 
-export default function TareasStack() {
+export default function MandadoStack() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -31,14 +31,14 @@ export default function TareasStack() {
       }}
     >
       <Stack.Screen
-        name="Lista"
-        component={ListaTareas}
+        name="Tabs"
+        component={ListaTabs}
         options={({ navigation }) => ({
-          title: 'Tareas',
+          title: 'Mandado',
           headerLeft: () => <BotonMenu navigation={navigation} />,
         })}
       />
-      <Stack.Screen name="Detalle" component={DetalleTarea} options={{ title: 'Tarea' }} />
+      <Stack.Screen name="Detalle" component={DetalleProducto} options={{ title: 'Producto' }} />
     </Stack.Navigator>
   );
 }

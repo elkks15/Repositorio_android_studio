@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 export function useSensor(Sensor, onData) {
-  const [disponible, setDisponible] = useState(true);
+  const [disponible, setDisponible] = useState(null);
   const onDataRef = useRef(onData);
   onDataRef.current = onData;
 
@@ -15,7 +15,7 @@ export function useSensor(Sensor, onData) {
         return;
       }
       sub = suscripcion;
-      if (!suscripcion) setDisponible(false);
+      setDisponible(Boolean(suscripcion));
     });
 
     return () => {
@@ -36,13 +36,18 @@ export async function escuchar(Sensor, onData) {
     } catch {
       // En web el permiso a veces no existe.
     }
-    Sensor.setUpdateInterval(90);
+    Sensor.setUpdateInterval(80);
     return Sensor.addListener(onData);
   } catch {
     return null;
   }
 }
 
-export function limitar(valor, min, max) {
-  return Math.max(min, Math.min(max, valor));
+export function gradosDesde(x, y) {
+  const angulo = (Math.atan2(y, x) * 180) / Math.PI;
+  return (angulo + 360) % 360;
+}
+
+export function diferenciaAngulo(actual, objetivo) {
+  return ((objetivo - actual + 540) % 360) - 180;
 }

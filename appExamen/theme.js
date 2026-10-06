@@ -1,11 +1,10 @@
 export const colors = {
-  bg: '#F4F6F8',
+  bg: '#F6F7F4',
   bgSoft: '#FFFFFF',
   card: '#FFFFFF',
-  ink: '#111827',
-  muted: '#6B7280',
-  line: '#E5E7EB',
-  accent: '#2563EB',
-  accentSoft: '#DBEAFE',
-  sea: '#1D4ED8',
+  ink: '#142016',
+  muted: '#5C6B62',
+  line: '#E2E8E3',
+  accent: '#15803D',
+  accentSoft: '#DCFCE7',
 };

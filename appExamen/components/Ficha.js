@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme';
 
-export default function Ficha({ titulo, meta, children, onPress }) {
+export default function Ficha({ titulo, meta, activo, children, onPress }) {
   const cuerpo = (
-    <View style={styles.ficha}>
+    <View style={[styles.ficha, activo && styles.activa]}>
       <Text style={styles.titulo}>{titulo}</Text>
       {meta ? <Text style={styles.meta}>{meta}</Text> : null}
       {children}
@@ -22,11 +22,15 @@ export default function Ficha({ titulo, meta, children, onPress }) {
 const styles = StyleSheet.create({
   ficha: {
     backgroundColor: colors.card,
-    borderRadius: 18,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.line,
-    padding: 16,
-    marginBottom: 12,
+    padding: 14,
+    marginBottom: 10,
+  },
+  activa: {
+    borderColor: colors.accent,
+    backgroundColor: colors.accentSoft,
   },
   titulo: {
     color: colors.ink,
@@ -35,8 +39,7 @@ const styles = StyleSheet.create({
   },
   meta: {
     marginTop: 4,
-    color: colors.sea,
-    fontWeight: '600',
+    color: colors.muted,
   },
   pressed: {
     opacity: 0.86,

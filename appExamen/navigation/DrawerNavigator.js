@@ -1,9 +1,7 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from '../screens/HomeScreen';
-import TareasStack from '../screens/tareas/TareasStack';
-import BitacoraScreen from '../screens/BitacoraScreen';
-import InstrumentosTabs from '../screens/instrumentos/InstrumentosTabs';
+import MandadoStack from '../screens/lista/MandadoStack';
+import CocheScreen from '../screens/CocheScreen';
 import PerfilScreen from '../screens/PerfilScreen';
 import AjustesScreen from '../screens/AjustesScreen';
 import { colors } from '../theme';
@@ -32,29 +30,19 @@ export default function DrawerNavigator() {
       }}
     >
       <Drawer.Screen
-        name="Inicio"
-        component={HomeScreen}
-        options={{ title: 'Inicio', drawerIcon: icono('home-outline') }}
+        name="Mandado"
+        component={MandadoStack}
+        options={{ headerShown: false, drawerIcon: icono('cart-outline') }}
       />
       <Drawer.Screen
-        name="Notas"
-        component={BitacoraScreen}
-        options={{ title: 'Notas', drawerIcon: icono('document-text-outline') }}
-      />
-      <Drawer.Screen
-        name="Tareas"
-        component={TareasStack}
-        options={{ headerShown: false, drawerIcon: icono('checkbox-outline') }}
-      />
-      <Drawer.Screen
-        name="Sensores"
-        component={InstrumentosTabs}
-        options={{ title: 'Sensores', drawerIcon: icono('phone-portrait-outline') }}
+        name="Coche"
+        component={CocheScreen}
+        options={{ title: 'El coche', drawerIcon: icono('car-outline') }}
       />
       <Drawer.Screen
         name="Perfil"
         component={PerfilScreen}
-        options={{ title: 'Perfil', drawerIcon: icono('person-outline') }}
+        options={{ title: 'Quién compra', drawerIcon: icono('person-outline') }}
       />
       <Drawer.Screen
         name="Ajustes"
